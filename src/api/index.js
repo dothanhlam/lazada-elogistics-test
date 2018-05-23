@@ -34,6 +34,7 @@ app.get('/api/urls', (req, res) => {
 
 app.post('/api/parse', (req, res) => {
   const data = req.body.data
+  // TODO: just parse 2 products, no more, no less :)
   Promise.all([
     parsers.parseProduct(data[0].value),
     parsers.parseProduct(data[1].value)
