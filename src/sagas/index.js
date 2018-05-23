@@ -16,15 +16,31 @@ function* fetchStatus(action) {
   yield put(actions.addStats(parsedData))
 }
 
+function* fetchURLsFromCache(action) {
+  if (!caches) {
+    return null
+  }
+    const parsedData = yield caches.match(getCall('urls')).then(function(response) {
+      if (response) {
+        response.json().then(function(json) {
+            return json
+        })
+      }
+      return null
+    })
+
+  yield put(actions.updateProducts(parsedData))
+}
+
 function* fetchURLs(action) {
   const urls = yield call(query, 'GET', getCall('urls'))
+  console.log('urls: ', urls)
   const parsedData = yield call(normalizeStatus, urls)
   yield put(actions.addURLs(parsedData))
 }
 
 function* parseURLsHandler(action) {
   const {urls} = action
-  console.log('urls: ', urls)
   const products = yield call(query, 'POST', getCall('parse'), urls)
   const parsedData = yield call(normalizeStatus, products)
   yield put(actions.updateProducts(parsedData))

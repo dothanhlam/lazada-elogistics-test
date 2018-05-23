@@ -44,7 +44,11 @@ module.exports = {
           presets: ['es2015', 'react', 'react-hmre', 'stage-1']
         }
       }
-    ]
+    ],
+
+    exclude: {
+      exclude: ['src/service-worker.js']
+    }
 
   },
 
